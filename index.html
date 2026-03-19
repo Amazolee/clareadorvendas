@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clareador de Manchas de Pele</title>
+  <style>
+    :root {
+      --bg: #fff8f3;
+      --surface: #ffffff;
+      --surface-2: #fff3eb;
+      --text: #2d2019;
+      --muted: #6e5b51;
+      --accent: #ef7e45;
+      --accent-dark: #d7642d;
+      --green: #39a96b;
+      --border: #f1d8c8;
+      --shadow: 0 18px 45px rgba(97, 55, 31, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #fff1e6 0, transparent 34%),
+        linear-gradient(180deg, #fffaf6 0%, #fff4ec 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .hero {
+      padding: 28px 0 36px;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #fff0e7;
+      color: var(--accent-dark);
+      border: 1px solid #ffd3bc;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.03;
+      margin-bottom: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p.lead {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 20px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .check-list div {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #4d3d34;
+      font-weight: 600;
+    }
+
+    .check-list span.icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #e6f7ed;
+      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      font-size: 14px;
+      margin-top: 1px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 10px 25px rgba(239, 126, 69, 0.22);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.97;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #ff945c 0%, var(--accent) 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .fine {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-card,
+    .card,
+    .offer-box,
+    .faq-item {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,185,143,0.65), rgba(255,185,143,0));
+      pointer-events: none;
+    }
+
+    .product-photo {
+      height: 360px;
+      border-radius: 22px;
+      background: linear-gradient(160deg, #fff6ef 0%, #ffe4d0 55%, #fff6ef 100%);
+      border: 1px solid #ffd8c4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      color: var(--accent-dark);
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 16px;
+      background: var(--surface-2);
+      border-radius: 18px;
+      border: 1px solid #ffe0cd;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat span {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .center-head {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .center-head h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.08;
+      margin-bottom: 10px;
+    }
+
+    .center-head p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid-4,
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+    }
+    
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    
+    .card {
+      padding: 22px;
+    }
+    
+    .ingrediente-image img {
+      width: 120px;
+      height: 120px;
+    }
+    .mini-image img {
+      width: 300px;
+      height: 250px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff0e6, #ffe0ce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 28px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card p,
+    .offer-box p,
+    .faq-item p,
+    .guarantee p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .benefit-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      background: #fffdfb;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .benefit-item .dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #fff0e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-dark);
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    .guarantee {
+      padding: 26px;
+      text-align: center;
+      background: linear-gradient(180deg, #fffaf7 0%, #fff1e6 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .guarantee strong {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent-dark);
+      background: #fff0e8;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .offers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .offer-box {
+      padding: 24px;
+      position: relative;
+    }
+
+    .offer-tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #e8f8ee;
+      color: #20784a;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .offer-box h3 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .offer-box .old {
+      color: #9d8b80;
+      text-decoration: line-through;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .offer-box .price {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--accent-dark);
+    }
+
+    .offer-box ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin: 18px 0 22px;
+    }
+
+    .offer-box li {
+      color: #4d3d34;
+      font-weight: 600;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 20px 22px;
+    }
+
+    .faq-item h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .footer-cta {
+      text-align: center;
+      padding-bottom: 54px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 0 40px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .hero-wrap,
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .offers,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .center {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+
+      .product-photo {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="container hero-wrap">
+      <div>
+        <h1>Clareie manchas com um visual suave, elegante e focado em conversão</h1>
+
+        <div class="check-list">
+          <div><span class="icon">✓</span> Clareia manchas difíceis como melasma, axilas e virilhas escuras</div>
+          <div><span class="icon">✓</span> Fórmula 100% natural, com dolomita e extrato de mulateiro</div>
+          <div><span class="icon">✓</span> Sem ácidos agressivos – trata sem arder ou descamar a pele</div>
+          <div><span class="icon">✓</span> Indicado para todos os tipos de pele, inclusive as mais sensíveis</div>
+          <div><span class="icon">✓</span> Resultados visíveis em poucas semanas, com uso contínuo</div>
+          <div><span class="icon">✓</span> Textura leve e fácil de aplicar, ideal para o dia a dia</div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://entrega.logzz.com.br/pay/mem5dlryp/1-frasco-11900" target="_blank" rel="noopener noreferrer">QUERO COMPRAR</a>
+          <a class="btn btn-secondary" href="#ofertas">Ver oferta</a>
+        </div>
+
+      </div>
+
+      <div class="hero-card">
+        <div class="product-photo">
+          <img style="height: 410px;" src="img/1unid.png" alt="">
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <strong>Oferta destacada</strong>
+            <span>1 frasco</span>
+          </div>
+          <div class="stat">
+            <strong>Preço</strong>
+            <span>R$ 119,00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center-head">
+        <h2>Clareador para diferentes tipos de manchas</h2>
+
+      </div>
+
+      <div class="grid-2">
+        <div class="card" class="center">
+          <h3>Axilas escuras</h3>
+          <div class="mini-image"><img src="img/axila.png" alt=""></div>
+        </div>
+        <div class="card" class="center">
+          <h3>Melasma</h3>
+          <div class="mini-image"><img src="img/melasma.png" alt=""></div>
+        </div>
+        <div class="card" class="center">
+          <h3>Virilhas escurecidas</h3>
+          <div class="mini-image"><img src="img/virilha.png" alt=""></div>
+        </div>
+        <div class="card" class="center">
+          <h3>Foliculite ou Manchas no Bumbum</h3>
+          <div class="mini-image"><img src="img/foliculite.png" alt=""></div>
+        </div>
+      </div>
+
+      <div class="cta-row" style="justify-content:center; margin-top:22px;">
+        <a class="btn btn-primary" href="https://entrega.logzz.com.br/pay/mem5dlryp/1-frasco-11900" target="_blank" rel="noopener noreferrer">COMPRAR AGORA</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <div class="center-head" style="text-align:left; margin-bottom:18px;">
+          <h2>Benefícios em destaque</h2>
+
+        </div>
+
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <div class="dot">🌸</div>
+            <div>
+              <strong>Ajuda a uniformizar o tom da pele</strong>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="dot">🛡️</div>
+            <div>
+              <strong>Uso com proposta mais suave</strong>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="dot">⏳</div>
+            <div>
+              <strong>Estrutura para mostrar evolução e rotina</strong>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="dot">💚</div>
+            <div>
+              <strong>Visual leve e confiável</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:26px;">
+        <div class="center-head" style="text-align:left; margin-bottom:14px;">
+          <h2>Ingredientes</h2>
+        </div>
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <div class="ingrediente-image"><img src="img/mulateiro.png" alt=""></div>
+            <div>
+              <strong>Mulateiro</strong>
+              <p>Planta da Amazônia com alto poder cicatrizante e antioxidante, uniformiza o tom da pele.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="ingrediente-image"><img src="img/dolomita.png" alt=""></div>
+            <div>
+              <strong>Dolomita</strong>
+              <p>Mineral rico em cálcio e magnésio, ajuda na regeneração da pele e clareamento de manchas.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="ingrediente-image"><img src="img/malaleuca.png" alt=""></div>
+            <div>
+              <strong>Óleo de Malaleuca</strong>
+              <p>Planta com propriedades anti-inflamatórias e cicatrizantes, ideal para pele sensível.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="ingrediente-image"><img src="img/argilaBranca.png" alt=""></div>
+            <div>
+              <strong>Argila Branca</strong>
+              <p>Mineral com propriedades purificantes e suavizantes, ajuda a reduzir a oleosidade e melhorar a textura da pele.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="guarantee">
+        <strong>RECOMENDAÇÕES</strong>
+        <h2 style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 12px;">Recomendamos o tratamento de 3 a 12 meses <br>
+           para maior eficácia</h2>
+        
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ofertas">
+    <div class="container">
+      <div class="center-head">
+        <h2>Oferta limitada</h2>
+      </div>
+
+ <div class="offers">
+  <div class="offer-box">
+    <span class="offer-tag">Oferta</span>
+    <h3>1 frasco</h3>
+    <span class="old">De R$ 189,99</span>
+    <div class="price">R$ 119,00</div>
+    <p>Preço promocional por tempo limitado</p>
+    <ul>
+      <li>✓ 1 unidade do clareador de manchas</li>
+      <li>✓ Desconto sobre o valor original</li>
+      <li>✓ Oferta especial de lançamento</li>
+    </ul>
+    <a class="btn btn-primary" href="https://entrega.logzz.com.br/pay/mem5dlryp/1-frasco-11900" target="_blank" rel="noopener noreferrer" style="width:100%;">COMPRAR</a>
+  </div>
+
+  <div class="offer-box" style="transform: scale(1.02); border-color:#f2b391;">
+    <span class="offer-tag" style="background:#fff0e6; color:#ba5626;">Mais vendido</span>
+    <h3>2 frascos</h3>
+    <span class="old">De R$ 279,99</span>
+    <div class="price">R$ 167,00</div>
+    <p>Melhor custo-benefício com desconto promocional</p>
+    <ul>
+      <li>✓ 2 unidades do clareador de manchas</li>
+      <li>✓ Economia maior que a oferta individual</li>
+      <li>✓ Opção em destaque na página</li>
+    </ul>
+    <a class="btn btn-primary" href="https://entrega.logzz.com.br/pay/mem5dlryp/2-frasco-16700" target="_blank" rel="noopener noreferrer" style="width:100%;">COMPRAR</a>
+  </div>
+
+  <div class="offer-box">
+    <span class="offer-tag">Kit econômico</span>
+    <h3>3 frascos</h3>
+    <span class="old">De R$ 359,99</span>
+    <div class="price">R$ 220,00</div>
+    <p>Oferta promocional para quem quer mais unidades</p>
+    <ul>
+      <li>✓ 3 unidades do clareador de manchas</li>
+      <li>✓ Valor promocional abaixo do preço original</li>
+      <li>✓ Ideal para tratamento por mais tempo</li>
+    </ul>
+    <a class="btn btn-primary" href="https://entrega.logzz.com.br/pay/mem5dlryp/oferta-rmk" target="_blank" rel="noopener noreferrer" style="width:100%;">COMPRAR</a>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center-head">
+        <h2>Perguntas frequentes</h2>
+      </div>
+
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <h3>Como acompanhar o meu pedido?</h3>
+          <p>Após a confirmação do pagamento, você receberá um código de rastreamento para acompanhar o seu pedido.</p>
+        </div>
+        <div class="faq-item">
+          <h3>É possível devolver ou trocar o produto?</h3>
+          <p>Sim, aceitamos devoluções e trocas dentro do prazo de 30 dias após a entrega. Consulte nossa política de devolução para mais informações.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qual é o prazo de entrega?</h3>
+          <p>O prazo de entrega varia de acordo com a região e a modalidade de envio escolhida. Normalmente, leva entre 7 e 14 dias úteis.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qual é a garantia do produto?</h3>
+          <p>Oferecemos uma garantia de 3 meses para todos os nossos produtos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section footer-cta">
+    <div class="container">
+      <div class="guarantee">
+        <h2 style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 10px;">Pronto para garantir seu produto?</h2>
+        <p style="margin-bottom:18px;">Clique no botão abaixo para aproveitar a oferta!</p>
+        <a class="btn btn-primary" href="#ofertas" rel="noopener noreferrer">IR PARA A OFERTA</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Esta é uma página de apresentação da oferta. A compra acontece na página oficial do checkout.
+  </footer>
+</body>
+</html>
